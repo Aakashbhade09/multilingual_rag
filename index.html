@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Chat | Multilingual Knowledge Retrieval</title>
+
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-shell">
+            <div class="login-visual">
+                <div class="brand mini-brand">
+                    <div class="brand-icon">◐</div>
+                    <div>
+                        <h1>RAG Chat</h1>
+                        <p>AI Document Assistant</p>
+                    </div>
+                </div>
+
+                <div class="robot-card">
+                    <div class="robot-orb">🤖</div>
+                    <div class="floating-chip chip-one">💬</div>
+                    <div class="floating-chip chip-two">📄</div>
+                    <div class="floating-chip chip-three">🌐</div>
+                </div>
+
+                <h2>Welcome Back! 👋</h2>
+                <p>
+                    Login to continue your journey with document-based multilingual AI assistance.
+                </p>
+            </div>
+
+            <div class="login-form-card">
+                <h2>Login to your account</h2>
+                <p>Enter your details to access your RAG dashboard.</p>
+
+                <label for="usernameInput">Username</label>
+                <input type="text" id="usernameInput" placeholder="Enter your name" />
+
+                <label for="passwordInput">Password</label>
+                <input type="password" id="passwordInput" placeholder="Enter your password" />
+
+                <div class="login-row">
+                    <label class="remember">
+                        <input type="checkbox" />
+                        Remember me
+                    </label>
+                    <button type="button" class="text-btn">Forgot password?</button>
+                </div>
+
+                <button id="loginBtn" class="primary-btn full-btn">Login</button>
+
+                <div class="divider">
+                    <span></span>
+                    <p>or</p>
+                    <span></span>
+                </div>
+
+                <button type="button" class="ghost-btn full-btn" id="demoLoginBtn">
+                    Demo Login
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- APP -->
+    <div class="app-shell">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">◐</div>
+                <div>
+                    <h1>RAG Chat</h1>
+                    <p>Knowledge Retrieval</p>
+                </div>
+            </div>
+
+            <nav class="side-menu">
+                <button class="menu-btn active" data-page="homePage">
+                    <span>⌂</span> Dashboard
+                </button>
+
+                <button class="menu-btn" data-page="chatPage">
+                    <span>✦</span> New Chat
+                </button>
+
+                <button class="menu-btn" data-page="documentsPage">
+                    <span>▣</span> Documents
+                </button>
+
+                <button class="menu-btn" data-page="uploadPage">
+                    <span>⇧</span> Upload Document
+                </button>
+
+                <button class="menu-btn" data-page="settingPage">
+                    <span>⚙</span> Settings
+                </button>
+
+                <button class="menu-btn" data-page="profilePage">
+                    <span>♙</span> Profile
+                </button>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="mini-stat-card">
+                    <span>🚀</span>
+                    <h3>RAG Project</h3>
+                    <p>FastAPI + ChromaDB + Ollama Llama3</p>
+                </div>
+
+                <div class="user-box">
+                    <div class="user-avatar" id="sidebarAvatar">A</div>
+                    <div>
+                        <strong id="currentUser">Guest</strong>
+                        <small>Active user</small>
+                    </div>
+                    <button id="logoutBtn" title="Logout">↪</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main-area">
+
+            <!-- DASHBOARD -->
+            <section id="homePage" class="page-section active-page">
+
+                <header class="topbar">
+                    <div>
+                        <h2>Welcome, <span id="dashboardUser">User</span> 👋</h2>
+                        <p>Ask anything from your documents in any language.</p>
+                    </div>
+
+                    <div class="top-actions">
+                        <select id="dashboardLanguageSelect">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                        </select>
+
+                        <button id="themeToggleBtn" class="round-icon-btn" title="Toggle theme">
+                            ☀
+                        </button>
+
+                        <div class="top-profile-dot" id="topProfileDot">A</div>
+                    </div>
+                </header>
+
+                <div class="search-card">
+                    <span>⌕</span>
+                    <input type="text" placeholder="Search anything..." />
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Multilingual Support</h3>
+                        <p>Ask in 15+ languages</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Smart Retrieval</h3>
+                        <p>Get accurate answers</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Source References</h3>
+                        <p>See document sources</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Powered</h3>
+                        <p>Using Llama 3</p>
+                    </div>
+                </div>
+
+                <div class="hero-panel">
+                    <div>
+                        <span class="hero-badge">AI Document Assistant</span>
+                        <h1>Start a New Conversation</h1>
+                        <p>
+                            Upload documents, ask questions, and get context-aware answers from your knowledge base.
+                        </p>
+                        <button id="startChatBtn" class="primary-btn">
+                            Start Chat →
+                        </button>
+                    </div>
+
+                    <div class="hero-bubbles">
+                        <div>💬</div>
+                        <div>💜</div>
+                        <div>📄</div>
+                    </div>
+                </div>
+
+                <div class="section-title">
+                    <h3>Statistics Overview</h3>
+                    <p>Live project activity summary</p>
+                </div>
+
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <span>Total Documents</span>
+                        <strong id="dashDocsCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Total Chunks</span>
+                        <strong id="dashChunksCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Total Queries</span>
+                        <strong id="dashQueriesCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Avg. Response</span>
+                        <strong>2–5s</strong>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAT -->
+            <section id="chatPage" class="page-section">
+
+                <header class="chat-header">
+                    <div>
+                        <h2>New Chat</h2>
+                        <p>Ask questions from your uploaded documents.</p>
+                    </div>
+
+                    <div class="chat-actions">
+                        <select id="languageSelect">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="es">Spanish</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="zh">Chinese</option>
+                            <option value="ar">Arabic</option>
+                            <option value="bn">Bengali</option>
+                            <option value="ta">Tamil</option>
+                            <option value="te">Telugu</option>
+                            <option value="mr">Marathi</option>
+                            <option value="ur">Urdu</option>
+                            <option value="pt">Portuguese</option>
+                            <option value="ru">Russian</option>
+                            <option value="ja">Japanese</option>
+                            <option value="ko">Korean</option>
+                        </select>
+
+                        <button id="clearChatBtn" class="round-icon-btn" title="Clear chat">
+                            🧹
+                        </button>
+                    </div>
+                </header>
+
+                <section class="chat-window" id="chatWindow">
+                    <div class="welcome-card" id="welcomeCard">
+                        <div class="welcome-icon">🤖</div>
+                        <h2>Welcome to RAG Chat</h2>
+                        <p>Ask questions from uploaded documents and get source-aware answers.</p>
+
+                        <div class="suggestions">
+                            <button class="suggestion-btn">Summarize this document</button>
+                            <button class="suggestion-btn">Main points batao</button>
+                            <button class="suggestion-btn">Explain like I am a beginner</button>
+                        </div>
+                    </div>
+                </section>
+
+                <footer class="composer-wrap">
+                    <div class="composer">
+                        <textarea id="questionInput" rows="1" placeholder="Ask your question..."></textarea>
+
+                        <div class="composer-icons">
+                            <button type="button" title="Attach">📎</button>
+                            <button type="button" title="Voice">🎙</button>
+                        </div>
+
+                        <button id="askButton" title="Send">
+                            ➤
+                        </button>
+                    </div>
+
+                    <p>Press Enter to send, Shift+Enter for new line</p>
+                </footer>
+            </section>
+
+            <!-- UPLOAD -->
+            <section id="uploadPage" class="page-section">
+
+                <div class="page-title">
+                    <h2>Upload Document</h2>
+                    <p>Upload your documents and start asking questions.</p>
+                </div>
+
+                <div class="upload-main-card">
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept=".pdf,.txt,.docx" hidden />
+
+                        <label for="fileInput" class="upload-label">
+                            <span class="cloud-icon">☁</span>
+                            <strong>Drag and drop your files here</strong>
+                            <small>Supports PDF, DOCX, TXT files up to 10MB</small>
+                            <b>Browse Files</b>
+                        </label>
+                    </div>
+
+                    <div id="uploadStatus" class="status-message"></div>
+                </div>
+
+                <div class="section-title">
+                    <h3>Upload Stats</h3>
+                    <p>Your document processing summary</p>
+                </div>
+
+                <div class="stats-overview compact-stats">
+                    <div class="stat-card">
+                        <span>Total Chunks</span>
+                        <strong id="totalChunks">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Model</span>
+                        <strong id="modelName">Ollama</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Allowed Files</span>
+                        <strong>PDF/TXT/DOCX</strong>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DOCUMENTS -->
+            <section id="documentsPage" class="page-section">
+
+                <div class="page-title">
+                    <h2>Documents</h2>
+                    <p>Manage and explore your uploaded documents.</p>
+                </div>
+
+                <div class="documents-toolbar">
+                    <div class="search-card small-search">
+                        <span>⌕</span>
+                        <input type="text" id="documentSearchInput" placeholder="Search documents..." />
+                    </div>
+
+                    <select id="sortSelect">
+                        <option>Sort by: Newest</option>
+                        <option>Sort by: Name</option>
+                    </select>
+
+                    <button id="clearDocsBtn" class="danger-btn">
+                        Clear All
+                    </button>
+                </div>
+
+                <div id="uploadsList" class="documents-grid empty-list">
+                    No files uploaded yet.
+                </div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section id="settingPage" class="page-section">
+
+                <div class="page-title">
+                    <h2>Settings</h2>
+                    <p>Customize your experience and preferences.</p>
+                </div>
+
+                <div class="settings-shell">
+                    <div class="settings-tabs">
+                        <button class="active">General</button>
+                        <button>Model</button>
+                        <button>Language</button>
+                        <button>Appearance</button>
+                        <button>Advanced</button>
+                    </div>
+
+                    <div class="settings-list">
+                        <div class="settings-row">
+                            <div>
+                                <h3>Default Language</h3>
+                                <p>Select your default answer language.</p>
+                            </div>
+
+                            <select id="settingsLanguageSelect">
+                                <option value="en">English</option>
+                                <option value="hi">Hindi</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                            </select>
+                        </div>
+
+                        <div class="settings-row">
+                            <div>
+                                <h3>Response Length</h3>
+                                <p>Choose how detailed the answer should be.</p>
+                            </div>
+
+                            <select>
+                                <option>Medium</option>
+                                <option>Short</option>
+                                <option>Detailed</option>
+                            </select>
+                        </div>
+
+                        <div class="settings-row">
+                            <div>
+                                <h3>Auto Save Chat History</h3>
+                                <p>Automatically save your conversations.</p>
+                            </div>
+
+                            <label class="switch">
+                                <input type="checkbox" checked />
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-row">
+                            <div>
+                                <h3>Show Source References</h3>
+                                <p>Show document source chunks with answers.</p>
+                            </div>
+
+                            <label class="switch">
+                                <input type="checkbox" checked />
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-row">
+                            <div>
+                                <h3>Stream Responses</h3>
+                                <p>Show answers while they are generating.</p>
+                            </div>
+
+                            <label class="switch">
+                                <input type="checkbox" checked />
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-row danger-row">
+                            <div>
+                                <h3>Clear Chat History</h3>
+                                <p>Remove saved conversation from this browser.</p>
+                            </div>
+
+                            <button id="settingsClearChatBtn" class="danger-btn">
+                                Clear Chat
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROFILE -->
+            <section id="profilePage" class="page-section">
+
+                <div class="page-title">
+                    <h2>Profile</h2>
+                    <p>Manage your account information.</p>
+                </div>
+
+                <div class="profile-layout">
+                    <div class="profile-card">
+                        <div class="profile-avatar big-avatar" id="profileAvatar">A</div>
+                        <h3 id="profileUserName">Guest</h3>
+                        <p>Multilingual RAG Chat User</p>
+                        <button class="ghost-btn">Change Avatar</button>
+                    </div>
+
+                    <div class="profile-info-card">
+                        <div class="info-row">
+                            <span>Full Name</span>
+                            <strong id="profileFullName">Guest</strong>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Email</span>
+                            <strong>demo@ragchat.com</strong>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Uploaded Documents</span>
+                            <strong id="profileDocsCount">0</strong>
+                        </div>
+
+                        <div class="info-row">
+                            <span>Total Chunks</span>
+                            <strong id="profileChunksCount">0</strong>
+                        </div>
+
+                        <div class="info-row">
+                            <span>AI Model</span>
+                            <strong id="profileModelName">Ollama</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- LOADING -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader-card">
+            <div class="spinner"></div>
+            <p id="loadingText">Processing...</p>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

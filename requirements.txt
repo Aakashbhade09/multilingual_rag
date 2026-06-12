@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+sentence-transformers
+chromadb
+langchain
+langchain-community
+pypdf
+python-docx
+langdetect
+deep-translator
+jinja2
